@@ -3,6 +3,9 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const git_1 = require("./git");
 const ai_1 = require("./ai");
+const args = process.argv.slice(2);
+const useEmoji = args.includes("--emoji");
+const dryRun = args.includes("--dry-run");
 async function main() {
     console.log("🔍 Staged changes check kar raha hoon...");
     const diff = (0, git_1.getStagedDiff)();
@@ -11,8 +14,12 @@ async function main() {
         process.exit(1);
     }
     console.log("🤖 AI commit message bana raha hai...");
-    const message = await (0, ai_1.generateCommitMessage)(diff);
+    const message = await (0, ai_1.generateCommitMessage)(diff, useEmoji);
     console.log(`\n✅ Generated Message:\n\n  ${message}\n`);
+    if (dryRun) {
+        console.log("🔎 Dry run mode — commit nahi hua.");
+        process.exit(0);
+    }
     (0, git_1.commitWithMessage)(message);
     console.log("🎉 Commit ho gaya!");
 }
