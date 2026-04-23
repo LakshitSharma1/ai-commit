@@ -1,6 +1,6 @@
 {
   "name": "@lakshitsharma1/claude-autocommit",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "AI-powered git commit message generator using Claude",
   "main": "dist/index.js",
   "bin": {
